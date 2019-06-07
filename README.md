@@ -1,3 +1,5 @@
 # Laborator.io backend Rails API
 
-- README.md adjustment to be filled later.
+- client production site found here: https://daveordavid.github.io/laboratorio-client/
+
+
