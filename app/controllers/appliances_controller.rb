@@ -1,9 +1,11 @@
-class AppliancesController < ApplicationController
-  before_action :set_appliance, only: [:show, :update, :destroy]
+class AppliancesController < ProtectedController
+  # changed ProtectedController from ApplicationController
+  before_action :set_appliance, only: %i[show update destroy]
 
   # GET /appliances
   def index
-    @appliances = Appliance.all
+    @appliances = current_user.appliances
+    # @appliances = Appliance.all // commented this original line out
 
     render json: @appliances
   end
@@ -15,10 +17,10 @@ class AppliancesController < ApplicationController
 
   # POST /appliances
   def create
-    @appliance = Appliance.new(appliance_params)
+    @appliance = current_user.appliances.build(appliance_params)
 
     if @appliance.save
-      render json: @appliance, status: :created, location: @appliance
+      render json: @appliance, status: :created # location: @appliance-should this be commented out?
     else
       render json: @appliance.errors, status: :unprocessable_entity
     end
@@ -41,7 +43,8 @@ class AppliancesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_appliance
-      @appliance = Appliance.find(params[:id])
+      # @appliance = Appliance.find(params[:id]) // commented this original line out
+      @appliance = current_user.appliances.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
