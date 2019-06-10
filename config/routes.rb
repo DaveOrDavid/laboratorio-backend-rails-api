@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :houses, except: %i[new edit]
-  # added 'except: %i[new edit]' in routes.rb
   resources :appliances, except: %i[new edit]
   # added 'except: %i[new edit]' in routes.rb
   # RESTful routes

@@ -3,5 +3,5 @@
 class User < ApplicationRecord
   include Authentication
   has_many :appliances
-  # has_many :examples
+  has_many :examples # for references
 end
