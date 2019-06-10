@@ -1,10 +1,10 @@
 class AppliancesController < ProtectedController
   # changed ProtectedController from ApplicationController
-  before_action :set_appliance, only: %i[show update destroy]
+  before_action :set_appliance, only: %i[update destroy show]
 
   # GET /appliances
   def index
-    @appliances = current_user.appliances
+    @appliances = current_user.appliances.all
     # @appliances = Appliance.all // commented this original line out
 
     render json: @appliances
@@ -20,7 +20,7 @@ class AppliancesController < ProtectedController
     @appliance = current_user.appliances.build(appliance_params)
 
     if @appliance.save
-      render json: @appliance, status: :created # location: @appliance-should this be commented out?
+      render json: @appliance, status: :created
     else
       render json: @appliance.errors, status: :unprocessable_entity
     end
