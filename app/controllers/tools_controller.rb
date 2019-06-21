@@ -1,9 +1,9 @@
-class ToolsController < ApplicationController
-  before_action :set_tool, only: [:show, :update, :destroy]
+class ToolsController < ProtectedController
+  before_action :set_tool, only: %i[update destroy show]
 
   # GET /tools
   def index
-    @tools = Tool.all
+    @tools = current_user.tools.all
 
     render json: @tools
   end
@@ -15,7 +15,7 @@ class ToolsController < ApplicationController
 
   # POST /tools
   def create
-    @tool = Tool.new(tool_params)
+    @tool = current_user.tools.build(tool_params)
 
     if @tool.save
       render json: @tool, status: :created, location: @tool
@@ -41,7 +41,7 @@ class ToolsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tool
-      @tool = Tool.find(params[:id])
+      @tool = current_user.tools.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
